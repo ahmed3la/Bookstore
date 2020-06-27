@@ -184,9 +184,13 @@ namespace Bookstore.Controllers
 
         public ActionResult Search(string term)
         {
-            var list = bookRepository.Search(a => a.Title.ToLower().Contains(term.ToLower())
-                                               || a.Description.ToLower().Contains(term.ToLower())
-                                               || a.Author.FullName.ToLower().Contains(term.ToLower())).ToList();
+            List<Book> list = new List<Book>();
+            if (!string.IsNullOrEmpty(term))
+                list = bookRepository.Search(a => a.Title.ToLower().Contains(term.ToLower())
+                                                 || a.Description.ToLower().Contains(term.ToLower())
+                                                 || a.Author.FullName.ToLower().Contains(term.ToLower())).ToList();
+            else
+                list = bookRepository.List().ToList();
             return View("Index", list);
         }
         List<Author> fillSelectList()

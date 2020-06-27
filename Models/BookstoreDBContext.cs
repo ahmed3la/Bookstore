@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Bookstore.Models
 {
-    public class BookstoreDBContext:DbContext
+    public class BookstoreDBContext: IdentityDbContext //
     {
         public BookstoreDBContext(DbContextOptions <BookstoreDBContext> options):base (options)
         {

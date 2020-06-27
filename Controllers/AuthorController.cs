@@ -5,11 +5,13 @@ using System.Threading.Tasks;
 using Bookstore.Models;
 using Bookstore.Models.Repositories;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Bookstore.Controllers
 {
+    [Authorize]
     public class AuthorController : Controller
     {
         private readonly IBookstoreRepository<Author> authorRepository; 
@@ -19,6 +21,7 @@ namespace Bookstore.Controllers
         }
 
         // GET: Author
+        [AllowAnonymous]
         public ActionResult Index()
         {
             var author = authorRepository.List();
@@ -33,13 +36,14 @@ namespace Bookstore.Controllers
         }
 
         // GET: Author/Create
+        [Authorize]
         public ActionResult Create()
         {
             return View();
         }
 
         // POST: Author/Create
-        [HttpPost]
+        [HttpPost] 
         [ValidateAntiForgeryToken]
         public ActionResult Create(Author auther)
         {
@@ -55,7 +59,7 @@ namespace Bookstore.Controllers
             }
         }
 
-        // GET: Author/Edit/5
+        // GET: Author/Edit/5 
         public ActionResult Edit(int id)
         {
             var author = authorRepository.Find(id); 
@@ -65,6 +69,7 @@ namespace Bookstore.Controllers
         // POST: Author/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
+         
         public ActionResult Edit(int id, Author author)
         {
             try
@@ -79,6 +84,7 @@ namespace Bookstore.Controllers
         }
 
         // GET: Author/Delete/5
+       
         public ActionResult Delete(int id)
         {
             var auther = authorRepository.Find(id); 
@@ -88,6 +94,7 @@ namespace Bookstore.Controllers
         // POST: Author/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
+        
         public ActionResult Delete(int id, IFormCollection collection)
         {
             try

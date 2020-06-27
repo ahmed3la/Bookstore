@@ -1,5 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@inject SignInManager<IdentityUser> signInManger;
+         
 
+<!DOCTYPE html>
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
@@ -25,6 +27,29 @@
                 <li class="nav-item">
                     <a class="nav-link" href="~/Book">Books</a>
                 </li>
+
+            </ul>
+
+            <ul class="navbar-nav ml-auto">
+                @if (signInManger.IsSignedIn(User))
+                {
+                    <li class="nav-item">
+                        <form method="post" asp-action="logout" asp-controller="account">
+                            <button class="nav nav-link btn btn-link py-0" type="submit">
+                                @User.Identity.Name
+                            </button>
+                        </form>
+                    </li>
+                }
+                else
+                {
+                    <li class="nav-item">
+                        <a asp-action="Register" asp-controller="Account" class="nav nav-link">Register</a>
+                    </li>
+                    <li class="nav-item">
+                        <a asp-action="Login" asp-controller="Account" class="nav nav-link">Login</a>
+                    </li>  
+                }
             </ul>
             <form class="form-inline my-2 my-lg-0" asp-action="Search" asp-controller="Book">
                 <input class="form-control mr-sm-2" type="search" name="term" placeholder="Search" aria-label="Search">
